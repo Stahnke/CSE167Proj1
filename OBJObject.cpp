@@ -10,7 +10,6 @@ OBJObject::OBJObject(const char *filepath)
 
 void OBJObject::parse(const char *filepath) 
 {
-	//TODO parse the OBJ file
 	// Populate the face indices, vertices, and normals vectors with the OBJ Object data
 	fp = fopen(filepath, "rb");  // make the file name configurable so you can load other files
 	if (fp == NULL) { cerr << "error loading file:\n" << filepath << endl; exit(-1); }  // just in case the file can't be found or is corrupt
@@ -54,7 +53,6 @@ void OBJObject::draw()
 
 	// Push a save state onto the matrix stack, and multiply in the toWorld matrix
 	glPushMatrix();
-	this->toWorld =  toWorldOrb * toWorldTrans * toWorldScale * toWorldRot;
 	glMultMatrixf(&(toWorld[0][0]));
 
 	glBegin(GL_POINTS);
@@ -79,22 +77,13 @@ void OBJObject::update()
 
 void OBJObject::spin(float deg)
 {
-	this->angle += deg;
-	if (this->angle > 360.0f || this->angle < -360.0f) this->angle = 0.0f;
-	// This creates the matrix to rotate the object
-	this->toWorldRot = glm::rotate(glm::mat4(1.0f), this->angle / 180.0f * glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+	toWorld = toWorld * glm::rotate(glm::mat4(1.0f), deg / 180.0f * glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 void OBJObject::translate(glm::vec3 transVec)
 {
-	//SOMEHOW NEED TO BE ABLE TO DO MULTIPLE TRANSFORMATIONS
-	//setting this->toWorld deletes all other transformations before next render
-	this->xPos += transVec.x;
-	this->yPos += transVec.y;
-	this->zPos += transVec.z;
-	glm::vec3 tempVec(xPos, yPos, zPos);
 	cout << "TRANSLATE BY: " << transVec.x << endl;
-	this->toWorldTrans = glm::translate(glm::mat4(1.0f), tempVec);
+	toWorld = glm::translate(glm::mat4(1.0f), transVec) * toWorld;
 }
 
 void OBJObject::resize(float change)
@@ -105,36 +94,23 @@ void OBJObject::resize(float change)
 
 void OBJObject::scale(glm::vec3 scaleVector)
 {
-	this->xScale *= scaleVector.x;
-	if (this->xScale <= 0)
-		xScale = 0.0125f;
-	this->yScale *= scaleVector.y;
-	if (this->yScale <= 0)
-		yScale = 0.0125f;
-	this->zScale *= scaleVector.z;
-	if (this->zScale <= 0)
-		zScale = 0.0125f;
+	toWorld = toWorld * glm::scale(glm::mat4(1.0f), scaleVector);
 	
-	glm::vec3 tempVec(xScale, yScale, zScale);
-	this->toWorldScale = glm::scale(glm::mat4(1.0f), tempVec);
 }
 
 void OBJObject::orbit(float deg)
 {
-	this->angleOrbit += deg;
-	if (this->angleOrbit > 360.0f || this->angleOrbit < -360.0f) this->angleOrbit = 0.0f;
 	// This creates the matrix to rotate the object
-	this->toWorldOrb = glm::rotate(glm::mat4(1.0f), this->angleOrbit / 180.0f * glm::pi<float>(), glm::vec3(0.0f, 0.0f, 1.0f));
+	toWorld = glm::rotate(glm::mat4(1.0f), deg / 180.0f * glm::pi<float>(), glm::vec3(0.0f, 0.0f, 1.0f)) * toWorld;
 }
 
 void OBJObject::reset() 
 {
-	this->xPos = this->yPos = this->zPos = 0;
-	this->xScale = this->yScale = this->zScale = 1;
-	this->angle = 0;
-	this->angleOrbit = 0;
-	orbit(0);
-	translate({ 0,0,0 });
-	scale({ 1,1,1 });
-	spin(0);
+
+	toWorldRot = glm::rotate(glm::mat4(1.0f), 0 / 180.0f * glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+	toWorldOrb = glm::rotate(glm::mat4(1.0f), 0 / 180.0f * glm::pi<float>(), glm::vec3(0.0f, 0.0f, 1.0f));
+	toWorldTrans = glm::translate(glm::mat4(1.0f), { 0,0,0 });
+	toWorldScale = glm::scale(glm::mat4(1.0f), { 1,1,1 });
+
+	toWorld = toWorldOrb * toWorldTrans * toWorldScale * toWorldRot;
 }

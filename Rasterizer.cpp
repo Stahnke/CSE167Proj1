@@ -14,11 +14,6 @@ struct Color    // generic color class
 	float r, g, b;  // red, green, blue
 };
 
-void loadData()
-{
-	// point cloud parser goes here
-}
-
 // Clear frame buffer
 void clearBuffer()
 {
@@ -55,20 +50,6 @@ void resizeCallback(GLFWwindow* window, int width, int height)
 	pixels = new float[window_width * window_height * 3];
 }
 
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	// Check for a key press
-	if (action == GLFW_PRESS /* TODO REMOVE FROM STARTER */ || action == GLFW_REPEAT)
-	{
-		// Check if escape was pressed
-		if (key == GLFW_KEY_ESCAPE)
-		{
-			// Close the window. This causes the program to also terminate.
-			glfwSetWindowShouldClose(window, GL_TRUE);
-		}
-	}
-}
-
 void displayCallback(GLFWwindow* window)
 {
 	clearBuffer();
@@ -81,62 +62,4 @@ void displayCallback(GLFWwindow* window)
 	glfwPollEvents();
 	// Swap buffers
 	glfwSwapBuffers(window);
-}
-
-void errorCallback(int error, const char* description)
-{
-	// Print error
-	fputs(description, stderr);
-}
-
-int main(int argc, char** argv) {
-	// Initialize GLFW
-	if (!glfwInit())
-	{
-		fprintf(stderr, "Failed to initialize GLFW\n");
-		return -1;
-	}
-
-	// 4x antialiasing
-	glfwWindowHint(GLFW_SAMPLES, 4);
-
-	// Create the GLFW window
-	GLFWwindow* window = glfwCreateWindow(window_height, window_height, "Rastizer", NULL, NULL);
-
-	// Check if the window could not be created
-	if (!window)
-	{
-		fprintf(stderr, "Failed to open GLFW window.\n");
-		glfwTerminate();
-		return -1;
-	}
-
-	// Make the context of the window
-	glfwMakeContextCurrent(window);
-
-	// Set swap interval to 1
-	glfwSwapInterval(1);
-
-	loadData();
-
-	// Set the error callback
-	glfwSetErrorCallback(errorCallback);
-	// Set the key callback
-	glfwSetKeyCallback(window, keyCallback);
-	// Set the window resize callback
-	glfwSetWindowSizeCallback(window, resizeCallback);
-
-	// Loop while GLFW window should stay open
-	while (!glfwWindowShouldClose(window))
-	{
-		// Main render display callback. Rendering of objects is done here.
-		displayCallback(window);
-	}
-
-	// Destroy the window
-	glfwDestroyWindow(window);
-	// Terminate GLFW
-	glfwTerminate();
-
-	exit(EXIT_SUCCESS);
 }
