@@ -21,6 +21,11 @@ public:
 	static int object_num;
 	static int width;
 	static int height;
+	static bool rasterizeOn;
+	static OBJObject * object1;
+	static OBJObject * object2;
+	static OBJObject * object3;
+
 	static void initialize_objects();
 	static void clean_up();
 	static GLFWwindow* create_window(int width, int height);
@@ -33,6 +38,8 @@ public:
 	static void scaleObject(glm::vec3);
 	static void orbitObject(float);
 	static void resetObject();
+	static bool getRenderingMode();
+	static OBJObject * getObject();
 };
 
 #endif

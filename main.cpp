@@ -98,7 +98,17 @@ int main(void)
 	while (!glfwWindowShouldClose(window))
 	{
 		// Main render display callback. Rendering of objects is done here.
-		Window::display_callback(window);
+		if (Window::getRenderingMode() == false)
+		{	
+			Window::display_callback(window);		//Through window.cpp
+			//glfwSetWindowSizeCallback(window, Window::resize_callback);
+		}
+		else
+		{
+			Rasterizer::displayCallback(window);	//Through rasterizer.cpp
+			//glfwSetWindowSizeCallback(window, Rasterizer::resizeCallback);
+		}
+
 		// Idle callback. Updating objects, etc. can be done here.
 		Window::idle_callback();
 	}

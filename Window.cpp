@@ -3,13 +3,14 @@
 const char* window_title = "GLFW Starter Project";
 Cube cube(5.0f);
 
-OBJObject * object1;
-OBJObject * object2;
-OBJObject * object3;
+OBJObject * Window::object1;
+OBJObject * Window::object2;
+OBJObject * Window::object3;
 
 int Window::width;
 int Window::height;
 int Window::object_num;
+bool Window::rasterizeOn;
 
 void Window::initialize_objects()
 {
@@ -20,6 +21,7 @@ void Window::initialize_objects()
 
 void Window::clean_up()
 {
+	//TODO:: DEALLOC THE NEW OBJECTS
 }
 
 GLFWwindow* Window::create_window(int width, int height)
@@ -225,6 +227,12 @@ void Window::key_callback(GLFWwindow* window, int key, int scancode, int action,
 				resetObject();
 				//cout << "r" << endl;
 		}
+
+		else if (key == GLFW_KEY_M)
+		{
+			if (rasterizeOn) rasterizeOn = false;
+			else rasterizeOn = true;
+		}
 	}
 }
 
@@ -276,4 +284,17 @@ void Window::resetObject()
 		object2->reset();
 	else if (object_num == 2)
 		object3->reset();
+}
+
+bool Window::getRenderingMode() {
+	return rasterizeOn;
+}
+
+OBJObject * Window::getObject() {
+	if (object_num == 0)
+		return object1;
+	else if (object_num == 1)
+		return object2;
+	else if (object_num == 2)
+		return object3;
 }

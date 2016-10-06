@@ -12,5 +12,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Window.h"
+#include "Rasterizer.h"
 
 #endif

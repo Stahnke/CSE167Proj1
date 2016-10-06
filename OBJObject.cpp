@@ -3,8 +3,7 @@
 OBJObject::OBJObject(const char *filepath) 
 {
 	toWorld = glm::mat4(1.0f);
-	xScale = yScale = zScale = 1;
-	translateToOrigin = glm::translate(glm::mat4(1.0f), { 0,0,0 });
+	size = 1;
 	parse(filepath);
 }
 
@@ -82,13 +81,13 @@ void OBJObject::spin(float deg)
 
 void OBJObject::translate(glm::vec3 transVec)
 {
-	cout << "TRANSLATE BY: " << transVec.x << endl;
 	toWorld = glm::translate(glm::mat4(1.0f), transVec) * toWorld;
 }
 
 void OBJObject::resize(float change)
 {
 	this->size += change;
+	if (size < 1) size = 1;
 	glPointSize(size);
 }
 
@@ -113,4 +112,20 @@ void OBJObject::reset()
 	toWorldScale = glm::scale(glm::mat4(1.0f), { 1,1,1 });
 
 	toWorld = toWorldOrb * toWorldTrans * toWorldScale * toWorldRot;
+}
+
+std::vector<glm::vec3> OBJObject::getVertices() {
+	return vertices;
+}
+
+std::vector<glm::vec3> OBJObject::getNormals() {
+	return normals;
+}
+
+glm::mat4 OBJObject::getToWorld() {
+	return toWorld;
+}
+
+float OBJObject::getPointSize() {
+	return size;
 }

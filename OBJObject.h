@@ -21,7 +21,8 @@ using namespace std;
 
 class OBJObject
 {
-private:
+public:
+//private:
 std::vector<unsigned int> indices;
 std::vector<glm::vec3> vertices;
 std::vector<glm::vec3> normals;
@@ -30,24 +31,14 @@ glm::mat4 toWorldRot;
 glm::mat4 toWorldTrans;
 glm::mat4 toWorldScale;
 glm::mat4 toWorldOrb;
-glm::mat4 translateToOrigin;
 
 FILE * fp;     // file pointer
 float x, y, z;  // vertex coordinates
 float r, g, b;  // vertex color
 int c1, c2, c3;    // characters read from file
-float angle;
-float angleOrbit;
-float size;
-float xPos;
-float yPos;
-float zPos;
-float xScale;
-float yScale;
-float zScale;
+int size;
 
-
-public:
+//public:
 	OBJObject(const char* filepath);
 
 	void parse(const char* filepath);
@@ -59,6 +50,10 @@ public:
 	void scale(glm::vec3);
 	void orbit(float);
 	void reset();
+	std::vector<glm::vec3> getVertices();
+	std::vector<glm::vec3> getNormals();
+	glm::mat4 getToWorld();
+	float getPointSize();
 };
 
 #endif

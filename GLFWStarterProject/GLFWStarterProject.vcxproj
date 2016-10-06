@@ -22,6 +22,7 @@
     <ClInclude Include="..\Cube.h" />
     <ClInclude Include="..\main.h" />
     <ClInclude Include="..\OBJObject.h" />
+    <ClInclude Include="..\Rasterizer.h" />
     <ClInclude Include="..\Window.h" />
   </ItemGroup>
   <ItemGroup>
