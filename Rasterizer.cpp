@@ -50,6 +50,7 @@ void Rasterizer::drawPoint(int x, int y, float r, float g, float b)
 
 void Rasterizer::rasterize()
 {
+
 	// Put your main rasterization loop here
 	// It should go over the point model and call drawPoint for every point in it
 
@@ -174,6 +175,11 @@ void Rasterizer::resizeCallback(GLFWwindow* window, int width, int height)
 
 void Rasterizer::displayCallback(GLFWwindow* window)
 {
+	//GET HEIGHT AND WIDTH
+	window_height = Window::getHeight();
+	window_width = Window::getWidth();
+	resizeCallback(window, window_width, window_height);
+
 	clearBuffer();
 	rasterize();
 

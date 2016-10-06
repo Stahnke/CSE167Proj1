@@ -298,3 +298,11 @@ OBJObject * Window::getObject() {
 	else if (object_num == 2)
 		return object3;
 }
+
+int Window::getHeight() {
+	return height;
+}
+
+int Window::getWidth() {
+	return width;
+}

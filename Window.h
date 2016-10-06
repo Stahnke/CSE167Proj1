@@ -40,6 +40,8 @@ public:
 	static void resetObject();
 	static bool getRenderingMode();
 	static OBJObject * getObject();
+	static int getHeight();
+	static int getWidth();
 };
 
 #endif
