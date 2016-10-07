@@ -105,13 +105,7 @@ void OBJObject::orbit(float deg)
 
 void OBJObject::reset() 
 {
-
-	toWorldRot = glm::rotate(glm::mat4(1.0f), 0 / 180.0f * glm::pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
-	toWorldOrb = glm::rotate(glm::mat4(1.0f), 0 / 180.0f * glm::pi<float>(), glm::vec3(0.0f, 0.0f, 1.0f));
-	toWorldTrans = glm::translate(glm::mat4(1.0f), { 0,0,0 });
-	toWorldScale = glm::scale(glm::mat4(1.0f), { 1,1,1 });
-
-	toWorld = toWorldOrb * toWorldTrans * toWorldScale * toWorldRot;
+	toWorld = glm::mat4(1.0f);
 }
 
 std::vector<glm::vec3> OBJObject::getVertices() {

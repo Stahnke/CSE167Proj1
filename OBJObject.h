@@ -27,10 +27,6 @@ std::vector<unsigned int> indices;
 std::vector<glm::vec3> vertices;
 std::vector<glm::vec3> normals;
 glm::mat4 toWorld;
-glm::mat4 toWorldRot;
-glm::mat4 toWorldTrans;
-glm::mat4 toWorldScale;
-glm::mat4 toWorldOrb;
 
 FILE * fp;     // file pointer
 float x, y, z;  // vertex coordinates

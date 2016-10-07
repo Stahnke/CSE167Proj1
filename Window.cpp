@@ -1,7 +1,7 @@
 #include "Window.h"
 
 const char* window_title = "GLFW Starter Project";
-Cube cube(5.0f);
+//Cube cube(5.0f);
 
 OBJObject * Window::object1;
 OBJObject * Window::object2;
@@ -21,7 +21,6 @@ void Window::initialize_objects()
 
 void Window::clean_up()
 {
-	//TODO:: DEALLOC THE NEW OBJECTS
 }
 
 GLFWwindow* Window::create_window(int width, int height)
